@@ -1,9 +1,10 @@
+SERVER_DIR = server
 
 install:
-	@python -m venv .venv
 	@poetry env use 3.10.5
 	@poetry install --no-root
+	@poetry run python $(SERVER_DIR)/environments.py && echo .env successfully created
 
 .PHONY: run
 run:
-	@poetry run python ./app.py --debug
+	@poetry run python ./${SERVER_DIR}/app.py --debug
