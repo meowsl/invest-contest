@@ -1,0 +1,4 @@
+body, html{
+  background: #424254 !important;
+  background: linear-gradient(38deg, rgba(2,0,36,0) 0%, rgba(0,0,0,0.47) 50%, rgba(0,0,0,1) 100%) !important;
+}

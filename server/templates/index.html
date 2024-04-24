@@ -4,11 +4,28 @@
   <meta charset="utf-8">
   <title>Invest Contest</title>
   <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/index.css') }}" rel="stylesheet">
 </head>
 <body>
-  <h1>Meow</h1>
-  <div>
-    <p>test</p>
+  <div class="containter-fluid bg-dark">
+    <header>
+      <div class="container p-2">
+      <div class="row d-flex justify-content-center">
+        <div class="col-6 bg-white mx-2 w-auto">
+          <p class="">meow</p>
+        </div>
+        <div class="col-6 bg-white mx-2 w-auto">
+          <p class="">meow</p>
+        </div>
+      </div>
+    </div>
+    </header>
+  </div>
+   <div class="banner containter-fluid d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="card p-5">
+      <p class="card-title text-center">Привет!</p>
+      <p class="card-info">Lorem ipsum dolor sit amet.</p>
+    </div>
   </div>
   <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 </body>
