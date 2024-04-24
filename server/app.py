@@ -1,4 +1,8 @@
-from flask import Flask, render_template
+from flask import (
+    Flask,
+    render_template,
+    request
+)
 from flask_sqlalchemy import SQLAlchemy
 from models import db
 import os
@@ -12,6 +16,14 @@ db.init_app(app)
 @app.route("/")
 def index():
     return render_template("index.html")
+
+
+@app.route('/predict', methods=["GET", "POST"])
+def predict():
+    if request.method == "POST":
+        pass
+
+    return render_template("predict.html")
 
 
 if __name__ == "__main__":
