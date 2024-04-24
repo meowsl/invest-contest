@@ -1,3 +1,10 @@
+'''
+---------------------------------------
+При запуске проверяет каждую модель
+на работоспособность и время выполнения
+---------------------------------------
+'''
+
 import time, os
 import tensorflow as tf
 from tensorflow.keras.initializers import Orthogonal
