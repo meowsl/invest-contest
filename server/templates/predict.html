@@ -9,6 +9,10 @@
     rel="stylesheet"
   >
   <link
+    href="{{ url_for('static', filename='css/bootstrap.min.css.map') }}"
+    rel="stylesheet"
+  >
+  <link
     href="{{ url_for('static', filename='css/index.css') }}"
     rel="stylesheet"
   >
@@ -18,11 +22,14 @@
   {% block content %}
   {% include 'includes/base/_header.html' %}
   {% include 'includes/predict-page/_banner.html' %}
+  {% set list_cur_local = list_cur %}
+  {% set list_indicators_local = list_indicators %}
+  {% set test = check_data %}
+  {% include 'includes/predict-page/_predict.html'%}
   {% include 'includes/base/_footer.html' %}
   {% endblock %}
   <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
 </body>
-
-</html>
 
 </html>

@@ -1,0 +1,8 @@
+.dropdown-menu.show {
+  max-height: 200px; /* Задайте максимальную высоту выпадающего меню */
+  overflow-y: auto; /* Добавляет возможность прокрутки */
+}
+
+.predict__panel{
+  padding: 3rem 10rem;
+}

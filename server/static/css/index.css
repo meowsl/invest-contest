@@ -13,6 +13,7 @@
 
 /* Импорт predict компонентов */
 @import url("predict-page/_banner.css");
+@import url("predict-page/_predict.css");
 
 body, html{
   font-family: "Sansation";
