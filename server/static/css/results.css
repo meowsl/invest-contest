@@ -1,0 +1,37 @@
+.results{
+  background-image: url("../images/results_background.svg");
+  background-size: 95% 110%;
+  background-position: center;
+
+}
+
+.cloud-button{
+  width: 30% !important;
+  border-radius: 24px !important;
+  background-color: #D9D9D9;
+}
+
+.cloud-button:hover{
+  -webkit-box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.35);
+  -moz-box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.35);
+  box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.35);
+}
+
+.ai-button{
+  font-family: "Sansation-Bold";
+  width: 40%;
+  height: 60%;
+  border-radius: 24px !important;
+  background-color: #50B848;
+}
+.ai-button__icon{
+  width: 35px;
+  height: 35px;
+}
+
+.ai-button:hover{
+  background-color: #299721;
+  -webkit-box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.35);
+  -moz-box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.35);
+  box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.35);
+}
