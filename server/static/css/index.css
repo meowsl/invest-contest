@@ -3,6 +3,8 @@
 @import url("banner.css");
 @import url("description.css");
 @import url("stage-1.css");
+@import url("stage-3.css");
+@import url("stage-4.css");
 
 body, html{
   font-family: "Sansation";
@@ -16,6 +18,7 @@ body, html{
 
 .block{
   margin: 3rem 10rem;
+  padding: 0 5rem;
 }
 
 .block-text{
