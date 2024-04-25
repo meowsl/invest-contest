@@ -17,14 +17,14 @@
 
 <body>
   {% block content %}
-  {% include 'includes/_header.html' %}
-  {% include 'includes/_banner.html' %}
-  {% include 'includes/_description.html' %}
-  {% include 'includes/_stage-1.html' %}
-  {% include 'includes/_stage-3.html' %}
-  {% include 'includes/_stage-4.html' %}
-  {% include 'includes/_results.html' %}
-  {% include 'includes/_footer.html' %}
+  {% include 'includes/base/_header.html' %}
+  {% include 'includes/index-page/_banner.html' %}
+  {% include 'includes/index-page/_description.html' %}
+  {% include 'includes/index-page/_stage-1.html' %}
+  {% include 'includes/index-page/_stage-3.html' %}
+  {% include 'includes/index-page/_stage-4.html' %}
+  {% include 'includes/index-page/_results.html' %}
+  {% include 'includes/base/_footer.html' %}
   {% endblock %}
   <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 </body>
