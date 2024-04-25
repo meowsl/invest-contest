@@ -5,6 +5,7 @@ from flask import (
 )
 from flask_sqlalchemy import SQLAlchemy
 from models import db
+from fill_db import fill_db
 import os
 
 # -- Конфигурация --
@@ -30,4 +31,6 @@ if __name__ == "__main__":
     if not os.path.exists(f"{os.getcwd()}/instance/{app.config['DATABASE_FILE']}"):
         with app.app_context():
             db.create_all()
+            fill_db()
+
     app.run("0.0.0.0", port=8000, debug=True)

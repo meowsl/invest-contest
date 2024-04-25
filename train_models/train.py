@@ -68,7 +68,7 @@ def generate_model(values: list, number: int or str):
     if not os.path.exists(save_folder):
             os.makedirs(save_folder)
 
-    save_path = os.path.join(os.getcwd(), f'{save_folder}/indicator{number}_model.h5')
+    save_path = os.path.join(os.getcwd(), f'{save_folder}/indicator{number}_model')
     model.save(save_path)
 
 def main():
