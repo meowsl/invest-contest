@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Invest Contest</title>
+  <title>{% block title %}{% endblock %}</title>
   <link
     href="{{ url_for('static', filename='css/bootstrap.min.css') }}"
     rel="stylesheet"
@@ -12,212 +12,20 @@
     href="{{ url_for('static', filename='css/index.css') }}"
     rel="stylesheet"
   >
+  {% block head %}{% endblock %}
 </head>
 
 <body>
-  <header class="header container-fluid py-4">
-    <div class="row d-flex justify-content-around">
-      <div class="col-6">
-        <a href="https://www.centrinvest.ru/">
-          <img
-            class="header__logo"
-            src="../static/images/logo-invest.svg"
-          >
-        </a>
-      </div>
-      <div class="links d-flex justify-content-end align-items-center col-6">
-        <a
-          href="#"
-          class="me-5"
-        >Главная</a>
-        <a
-          href="#"
-          class="me-5"
-        >Демо</a>
-      </div>
-    </div>
-  </header>
-  <div class="banner container-fluid d-flex justify-content-center align-items-center">
-    <div class="banner__content container">
-      <div class="row">
-        <div class="col-6 d-flex align-items-center">
-          <p class="banner__content title mb-5">Система анализа Целей Устойчивого Развития</p>
-        </div>
-        <div class="col-6 mt-5">
-          <img
-            class="image mt-1 mt-md-3 mt-xxl-5"
-            src="../static/images/banner.svg"
-          >
-        </div>
-      </div>
-
-    </div>
-  </div>
-  <div class="description container-fluid d-flex justify-content-center align-items-center">
-    <div class="row block text-center">
-      <div class="col-12 block-title">
-        <p>Что такое <span class="highlight">ЦУР</span>?</p>
-      </div>
-      <div class="block-info col-6 mt-4 px-5">
-        <p class="block-text mx-5">Это набор из 17 взаимосвязанных целей, разработанных в 2015 году Генеральной
-          ассамблеей ООН в
-          качестве «плана
-          достижения лучшего и более устойчивого будущего для всех».</p>
-      </div>
-      <div class="block-info col-6 mt-4 px-5">
-        <p class="block-text mx-5">Отслеживая статистические данные показателей государство способно обеспечивать
-          наиболее
-          качественные и
-          благоприятные изменения для того или иного региона РФ.</p>
-      </div>
-    </div>
-  </div>
-  <div class="stage-1 container-fluid d-flex justify-content-center align-items-center">
-    <div class="row block text-center">
-      <div class="col-12 block-title">
-        <p>Этап 1-2</p>
-      </div>
-      <div class="col-6">
-        <img
-          class="image"
-          src="../static/images/stage1.svg"
-        >
-      </div>
-      <div class="col-6 d-flex align-items-center">
-        <div class="d-flex flex-column mx-5">
-          <p class="block-text mb-5 mx-1 mx-md-3 mx-xxl-5">Проведя тщательный анализ имеющихся данных наша команда
-            пришла к выводу, что
-            для
-            анализа
-            временного ряда
-            критически мало данных. Следуя из этого каждый участник приступил к поиску дополнительных сведений для
-            расширения, а следовательно для конкретизации имеющейся статистики.</p>
-          <button
-            type="button"
-            class="results-button btn btn-lg d-flex justify-content-center align-items-center mx-auto mt-1 mt-md-2 mt-xxl-5"
-          >
-            <img
-              src="../static/images/document_white.svg"
-              class="document-logo me-2"
-            >
-            <p class="m-0 text-white">Результат</p>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="stage-3 container-fluid d-flex justify-content-center align-items-center">
-    <div class="row block text-center d-flex flex-column justify-content-center">
-      <div class="col-12 block-title pb-4">
-        Этап 3
-      </div>
-      <div class="stage-3__description col-12">
-        <p class="description__text">По стандартизированным данным была построена корреляционная матрица и тепловая
-          карта, ее анализ показал наличие сильных связей между показателями, как положительных, так и отрицательных.
-          Однако далеко не между всеми связями наблюдается адекватная корреляция, так, например, сильная отрицательная
-          связь наблюдается между долей городского населения проживающего в аварийном жилищном фонде и долей
-          утилизированных и обезвреженных отходов производства.</p>
-      </div>
-      <div class="col-12 mt-5">
-        <button
-          type="button"
-          class="results-button btn btn-lg d-flex justify-content-center align-items-center mx-auto"
-        >
-          <img
-            src="../static/images/document_white.svg"
-            class="image me-2"
-          >
-          <p class="m-0 text-white">Результат</p>
-        </button>
-      </div>
-    </div>
-  </div>
-  <div class="stage-4 container-fluid d-flex justify-content-center align-items-center">
-    <div class="row block text-center">
-      <div class="col-12 block-title">
-        <p>Этап 4</p>
-      </div>
-      <div class="col-6 d-flex align-items-center">
-        <div class="d-flex flex-column mx-5">
-          <p class="block-text mb-5 mx-5">По итогам кластерного анализа было получено 2 кластера, размер которых
-            составляет 40 и 23 соответственно регионам РФ. Алгоритм K-средний был направлен на выбор центроидов внутри
-            групп. Основываясь на инерции, мы получили завышенные показатели, что говорит о несостоятельных результатах
-            кластеризации. </p>
-          <button
-            type="button"
-            class="results-button btn btn-lg d-flex justify-content-center align-items-center mx-auto mt-5"
-          >
-            <img
-              src="../static/images/document_white.svg"
-              class="document-logo me-2"
-            >
-            <p class="m-0 text-white">Результат</p>
-          </button>
-        </div>
-      </div>
-      <div class="col-6">
-        <img
-          src="../static/images/stage4.svg"
-          class="image"
-        >
-      </div>
-    </div>
-  </div>
-  <div class="results container-fluid d-flex justify-content-center align-items-center">
-    <div class="row block__results text-center">
-      <div class="col-12 block-title">
-        <p class="block-title">Итоги</p>
-      </div>
-      <div class="block-info col-6 mt-1 mt-md-3 mt-xxl-5 px-1 px-md-3 px-xxl-5">
-        <p class="block-text mx-5">Пройдя все этапы, мы предоставляем Вам подробные итоги в виде программного кода с
-          описанием каждого шага. Ознакомиться с нашими решениями можно на общем облачном хранилище.</p>
-      </div>
-      <div class="block-info col-6 mt-1 mt-md-3 mt-xxl-5 px-1 px-md-3 px-xxl-5">
-        <p class="block-text mx-5">Более того, на основе анализа во всех необходимых этапах наши разработчики
-          подготовили Вашему вниманию нейронную сеть. Ознакомиться с ходом ее работы возможно на следующей странице.</p>
-      </div>
-      <div class="col-6 px-5">
-        <button
-          type="button"
-          class="cloud-button btn btn-lg d-flex justify-content-between align-items-center mx-auto mt-1 mt-md-3 mt-xxl-5"
-        >
-          <img
-            src="../static/images/yandex.svg"
-            class="image me-2"
-          >
-          <p class="m-0 text-black">Я. Диск</p>
-        </button>
-      </div>
-      <div class="col-6 px-5">
-        <button
-          type="button"
-          class="ai-button btn btn-lg d-flex justify-content-evenly align-items-center mx-auto mt-1 mt-md-3 mt-xxl-5"
-        >
-          <p class="m-0 text-white">Ознакомиться</p>
-          <img
-            src="../static/images/arrow.svg"
-            class="ai-button__icon image me-2"
-          >
-        </button>
-      </div>
-    </div>
-  </div>
-  <div class="footer container-fluid d-flex justify-content-center">
-    <div class="footer-block row text-center">
-      <div class="col-12">
-        <p class="text-black">С душой и любовью,<br /><span class="footer-highlight text-white">template</span></p>
-      </div>
-      <div class="col-12">
-        <a href="">
-          <img
-            src="../static/images/telegram_icon.svg"
-            class="image footer-icon"
-          >
-        </a>
-      </div>
-    </div>
-  </div>
-
+  {% block content %}
+  {% include 'includes/_header.html' %}
+  {% include 'includes/_banner.html' %}
+  {% include 'includes/_description.html' %}
+  {% include 'includes/_stage-1.html' %}
+  {% include 'includes/_stage-3.html' %}
+  {% include 'includes/_stage-4.html' %}
+  {% include 'includes/_results.html' %}
+  {% include 'includes/_footer.html' %}
+  {% endblock %}
   <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 </body>
 
