@@ -1,4 +1,10 @@
+@import url("fonts.css");
+@import url("header.css");
+@import url("banner.css");
+
 body, html{
-  background: #424254 !important;
-  background: linear-gradient(38deg, rgba(2,0,36,0) 0%, rgba(0,0,0,0.47) 50%, rgba(0,0,0,1) 100%) !important;
+  font-family: "Sansation";
+  height: 100%;
+  width: 100%;
 }
+
