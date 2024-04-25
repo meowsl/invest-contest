@@ -1,25 +1,54 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import(
+    Mapped,
+    mapped_column
+)
+from sqlalchemy import (
+    String,
+    Integer,
+    Numeric,
+    ForeignKey
+)
 
 db = SQLAlchemy()
 
+cur_indicator = db.Table(
+    "cur_indicator",
+    db.Column("cur_id", Integer(), ForeignKey("cur.id")),
+    db.Column("indicator_id", Integer(), ForeignKey("indicator.id"))
+)
 
 class Cur(db.Model):
     __tablename__ = "cur"
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False)
-    cur_parameter = db.relationship("CurParameter", backref=db.backref("cur"))
+    '''
+    Модель ЦУРов
+    '''
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    name: Mapped[str] = mapped_column(String(256), info={"label": "Полное название цели"})
+    indicator = db.relationship("Indicator", secondary="cur_indicator",
+                                backref=db.backref("indicators", lazy="dynamic"),
+                                info={"label":"Показатели"})
 
-class CurParameter(db.Model):
-    __tablename__ = "cur_parameter"
-    id = db.Column(db.Integer, primary_key=True)
-    cur_id = db.Column(db.Integer, db.ForeignKey("cur.id"))
-    name = db.Column(db.String(255), nullable=False)
-    cur_parameter_value = db.relationship("CurParameterValue", backref=db.backref("Cur_parameter"))
+class Indicator(db.Model):
+    __tablename__ = "indicator"
+    '''
+    Показатели ЦУРов
+    '''
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    name: Mapped[str] = mapped_column(String(256), info={"label":"Название"})
 
-class CurParameterValue(db.Model):
-    __tablename__ = 'cur_parameter_value'
-    id = db.Column(db.Integer, primary_key=True)
-    cur_parameter_id = db.Column(db.Integer, db.ForeignKey('cur_parameter.id'))
-    year = db.Column(db.Integer, nullable=False)
-    month = db.Column(db.Integer, nullable=False)
-    value = db.Column(db.Numeric(precision=15, scale=2), nullable=False)
+class IndicatorValue(db.Model):
+    __tablename__ = "indicator_value"
+    '''
+    Значения показателей
+    '''
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    year: Mapped[int] = mapped_column(Integer, info={"label": "Год"})
+    month: Mapped[int] = mapped_column(Integer, check_constraint='month >= 1 and month <= 12', nullable=True, info={"label": "Месяц"})
+    value: Mapped[float] = mapped_column(Numeric(precision=15, scale=2), info={"label": "Значение"})
+    indicator_id: Mapped[int] = mapped_column(Integer, ForeignKey("indicator.id"), info={"label": "ID показателя"})
+
+    @staticmethod
+    def validate_month(month):
+        if not (1 <= month <= 12):
+            raise ValueError("Month must be between 1 and 12")
