@@ -6,6 +6,7 @@
 @import url("stage-3.css");
 @import url("stage-4.css");
 @import url("results.css");
+@import url("footer.css");
 
 body, html{
   font-family: "Sansation";

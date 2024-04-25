@@ -12,3 +12,8 @@
   font-family: "Sansation-Light";
   src: url("../fonts/Sansation-Light.ttf");
 }
+
+@font-face {
+  font-family: "RubikGlitch";
+  src: url("../fonts/RubikGlitch-Regular.ttf");
+}
