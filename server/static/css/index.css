@@ -1,12 +1,18 @@
+/* Импорт базовых компонентов */
 @import url("base/fonts.css");
 @import url("base/header.css");
+@import url("base/footer.css");
+
+/* Импорт index компонентов */
 @import url("index-page/banner.css");
 @import url("index-page/description.css");
 @import url("index-page/stage-1.css");
 @import url("index-page/stage-3.css");
 @import url("index-page/stage-4.css");
 @import url("index-page/results.css");
-@import url("base/footer.css");
+
+/* Импорт predict компонентов */
+@import url("predict-page/_banner.css");
 
 body, html{
   font-family: "Sansation";

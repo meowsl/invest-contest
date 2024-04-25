@@ -1,12 +1,28 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
   <meta charset="utf-8">
   <title>Invest Contest</title>
-  <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
-  <link href="{{ url_for('static', filename='css/index.css') }}" rel="stylesheet">
+  <link
+    href="{{ url_for('static', filename='css/bootstrap.min.css') }}"
+    rel="stylesheet"
+  >
+  <link
+    href="{{ url_for('static', filename='css/index.css') }}"
+    rel="stylesheet"
+  >
 </head>
+
 <body>
+  {% block content %}
+  {% include 'includes/base/_header.html' %}
+  {% include 'includes/predict-page/_banner.html' %}
+  {% include 'includes/base/_footer.html' %}
+  {% endblock %}
   <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 </body>
+
+</html>
+
 </html>
