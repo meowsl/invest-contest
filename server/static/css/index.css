@@ -1,15 +1,15 @@
 /* Импорт базовых компонентов */
-@import url("base/fonts.css");
-@import url("base/header.css");
-@import url("base/footer.css");
+@import url("base/_fonts.css");
+@import url("base/_header.css");
+@import url("base/_footer.css");
 
 /* Импорт index компонентов */
-@import url("index-page/banner.css");
-@import url("index-page/description.css");
-@import url("index-page/stage-1.css");
-@import url("index-page/stage-3.css");
-@import url("index-page/stage-4.css");
-@import url("index-page/results.css");
+@import url("index-page/_banner.css");
+@import url("index-page/_description.css");
+@import url("index-page/_stage-1.css");
+@import url("index-page/_stage-3.css");
+@import url("index-page/_stage-4.css");
+@import url("index-page/_results.css");
 
 /* Импорт predict компонентов */
 @import url("predict-page/_banner.css");
