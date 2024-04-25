@@ -2,6 +2,7 @@
 @import url("header.css");
 @import url("banner.css");
 @import url("description.css");
+@import url("stage-1.css");
 
 body, html{
   font-family: "Sansation";
@@ -15,4 +16,21 @@ body, html{
 
 .block{
   margin: 3rem 10rem;
+}
+
+.block-text{
+  font-size: 24px;
+}
+
+.results-button{
+  width: 30% !important;
+  border-radius: 24px !important;
+  background-color: #50B848;
+}
+
+.results-button:hover{
+  background-color: #299721;
+  -webkit-box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.35);
+  -moz-box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.35);
+  box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.35);
 }
