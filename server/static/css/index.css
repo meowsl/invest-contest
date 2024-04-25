@@ -1,12 +1,12 @@
-@import url("fonts.css");
-@import url("header.css");
-@import url("banner.css");
-@import url("description.css");
-@import url("stage-1.css");
-@import url("stage-3.css");
-@import url("stage-4.css");
-@import url("results.css");
-@import url("footer.css");
+@import url("base/fonts.css");
+@import url("base/header.css");
+@import url("index-page/banner.css");
+@import url("index-page/description.css");
+@import url("index-page/stage-1.css");
+@import url("index-page/stage-3.css");
+@import url("index-page/stage-4.css");
+@import url("index-page/results.css");
+@import url("base/footer.css");
 
 body, html{
   font-family: "Sansation";
