@@ -1,6 +1,7 @@
 @import url("fonts.css");
 @import url("header.css");
 @import url("banner.css");
+@import url("description.css");
 
 body, html{
   font-family: "Sansation";
@@ -8,3 +9,10 @@ body, html{
   width: 100%;
 }
 
+.block-title{
+  font-size: 42px !important;
+}
+
+.block{
+  margin: 3rem 10rem;
+}
