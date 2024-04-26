@@ -1,7 +1,7 @@
 .stage-3__description {
   max-width: 931px;
   max-height: 446px;
-  background-image: url("../images/stage3.svg");
+  background-image: url("../../images/stage3.svg");
   background-size:cover;
   background-position: center;
 }
@@ -15,9 +15,7 @@
 
 @media screen and (max-width: 1600px) {
   .stage-3__description {
-    background-image: url("../images/stage3.svg");
     background-size:130% 100%;
-    background-position: center;
   }
 
   .description__text {

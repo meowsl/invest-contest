@@ -15,6 +15,7 @@
         <button
           type="button"
           class="predict-button btn btn-lg d-flex align-items-center px-5 mx-auto mt-1 mt-md-3 mt-xxl-5"
+          id="scroll-button"
         >
           <p class="m-0 text-white">Ознакомиться</p>
           <img
@@ -28,3 +29,18 @@
 
   </div>
 </div>
+
+<script>
+  document.getElementById('scroll-button').addEventListener('click', event => {
+    event.preventDefault(); // Предотвращаем стандартное поведение ссылки
+
+    const predictElement = document.querySelector('.predict');
+
+    if (predictElement) {
+      predictElement.scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+  });
+
+</script>
