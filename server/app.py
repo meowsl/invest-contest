@@ -95,7 +95,7 @@ def add_cors_headers(response):
 
 if __name__ == "__main__":
     init_db()
-    app.run("0.0.0.0", port=8000, debug=True)
+    app.run("0.0.0.0", port=8000)
 
 else:
     init_db()
