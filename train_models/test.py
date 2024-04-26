@@ -20,7 +20,7 @@ def test_model(values: list, number: int or str):
 
     start_time = time.time()
 
-    model_path = os.path.join(os.path.dirname(__file__), f'models/{cur_folder}/indicator{number}_model')
+    model_path = os.path.join(f'server/source/{cur_folder}/', f'indicator{number}_model')
     model = tf.saved_model.load(model_path)
 
     loaded_model = tf.saved_model.load(model_path)
@@ -44,8 +44,12 @@ def test_model(values: list, number: int or str):
     print(f"Time taken to make the prediction: {end_time - start_time:.4f} seconds")
     print("-" * 10)
 
+    with open('results.txt', 'a') as f:
+        f.write(f"{cur_folder}, Показатель из файла №{number} = {pred[-1][0]:.2f}\n")
+
+
 def main():
-    file_name = 'data/data.xlsx'
+    file_name = 'train_models/data/data.xlsx'
     value = 'Ростовская область'
     data_cur = find_rows_by_first_cell_value(file_name, value)
     for item in data_cur:
