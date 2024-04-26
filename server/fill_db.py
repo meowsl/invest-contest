@@ -1,5 +1,5 @@
-from models import *
-from services import (
+from .models import *
+from .services import (
     CURManager,
     ExcelParser
 )

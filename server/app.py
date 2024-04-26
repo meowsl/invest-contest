@@ -7,9 +7,9 @@ from flask import (
     jsonify
 )
 from flask_sqlalchemy import SQLAlchemy
-from models import *
-from fill_db import fill_db
-from services import (
+from .models import *
+from .fill_db import fill_db
+from .services import (
     CURManager,
     ModelExecute
 )

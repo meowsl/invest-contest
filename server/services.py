@@ -1,7 +1,7 @@
 import openpyxl, os
 import tensorflow as tf
 import numpy as np
-from models import Indicator
+from .models import Indicator
 
 class ExcelParser:
     '''
