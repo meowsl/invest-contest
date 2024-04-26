@@ -7,7 +7,8 @@ from sqlalchemy import (
     String,
     Integer,
     Numeric,
-    ForeignKey
+    ForeignKey,
+    CheckConstraint
 )
 
 db = SQLAlchemy()
@@ -45,7 +46,7 @@ class IndicatorValue(db.Model):
     '''
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     year: Mapped[int] = mapped_column(Integer, info={"label": "Год"})
-    month: Mapped[int] = mapped_column(Integer, check_constraint='month >= 1 and month <= 12', nullable=True, info={"label": "Месяц"})
+    month: Mapped[int] = mapped_column(Integer, CheckConstraint('month >= 1 and month <= 12'), nullable=True, info={"label": "Месяц"})
     value: Mapped[float] = mapped_column(Numeric(precision=15, scale=2), info={"label": "Значение"})
     indicator_id: Mapped[int] = mapped_column(Integer, ForeignKey("indicator.id"), info={"label": "ID показателя"})
 
