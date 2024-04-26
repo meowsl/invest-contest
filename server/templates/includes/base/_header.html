@@ -11,12 +11,24 @@
     <div class="links d-flex justify-content-end align-items-center col-6">
       <a
         href="/"
-        class="me-5"
+        class="me-5 nav-link"
       >Главная</a>
       <a
         href="/predict"
-        class="me-5"
+        class="me-5 nav-link"
       >Демо</a>
     </div>
   </div>
 </header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const links = document.querySelectorAll('.nav-link');
+
+    links.forEach(link => {
+      if (link.href === window.location.href) {
+        link.classList.add('active');
+      }
+    });
+  });
+</script>

@@ -22,7 +22,7 @@
   color: #2F9746;
 }
 
-.links > a:active{
+.links > a.active{
   color: #2F9746;
 }
 
