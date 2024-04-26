@@ -154,7 +154,6 @@
     });
   });
 
-  // Этот код предотвращает закрытие выпадающего меню при клике на чекбокс или label
   document.querySelectorAll('.cur-checkbox').forEach(checkbox => {
     checkbox.addEventListener('click', event => {
       event.stopPropagation();
@@ -168,10 +167,13 @@
   });
 
   document.getElementById('run-button').addEventListener('click', () => {
-    // Собираем значения выделенных чекбоксов
     const selectedIndicators = Array.from(document.querySelectorAll('.indicator-checkbox:checked'), checkbox => checkbox.value);
 
-    // Отправляем данные на сервер Flask с помощью fetch API
+    if (selectedIndicators.length === 0) {
+      alert('Необходимо выбрать данные для отправки на сервер.');
+      return;
+    }
+
     fetch('/predict', {
       method: 'POST',
       headers: {
@@ -206,13 +208,11 @@
         const resultDiv = document.getElementById('result');
         resultDiv.innerHTML = '';
         data.data.forEach((item, index) => {
-          // Присваиваем значения с бэке переменным
           const curId = item.cur_id;
           const indicatorId = item.indicator_id;
           const values = item.values;
           const years = item.years;
 
-          // Выделяем последние данные
           const lastYear = years[years.length - 1];
           const lastValue = values[values.length - 1];
 
@@ -222,7 +222,6 @@
           const resultItem = document.createElement('div');
           resultDiv.appendChild(resultItem);
 
-          // Создаем линейную диаграмму
           const lineData = [{
             x: years,
             y: values,
@@ -275,7 +274,6 @@
             }]
           };
 
-          // Создаем новый контейнер для линейной диаграммы с уникальным идентификатором
           const lineGraphDiv = document.createElement('div');
           lineGraphDiv.id = `line-graph-${index}`;
           resultDiv.appendChild(lineGraphDiv);
