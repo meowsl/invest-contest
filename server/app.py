@@ -1,3 +1,5 @@
+import os, re
+from collections import defaultdict
 from flask import (
     Flask,
     render_template,
@@ -7,68 +9,65 @@ from flask import (
 from flask_sqlalchemy import SQLAlchemy
 from models import *
 from fill_db import fill_db
-from services import CURManager, ModelExecute
-from collections import defaultdict
-import os, re
+from services import (
+    CURManager,
+    ModelExecute
+)
+
 
 # -- Конфигурация --
 app = Flask(__name__, static_url_path="/static")
 app.config.from_pyfile(f"{os.getcwd()}/server/config.py")
 db.init_app(app)
 
+def init_db():
+    if not os.path.exists(f"{os.getcwd()}/instance/{app.config['DATABASE_FILE']}"):
+        with app.app_context():
+            db.create_all()
+            fill_db()
+
+def get_prediction_data():
+    data = request.get_json(force=True)
+    indicators = data.get('indicators')
+
+    if indicators:
+        sended_data = []
+        for item in indicators:
+
+            target_cur = db.session.query(cur_indicator).filter_by(indicator_id=int(item)).first()[0]
+
+            indicator_values = IndicatorValue.query.filter_by(indicator_id=int(item)).all()
+
+            target_values = [float(item.value) for item in indicator_values]
+
+            executer = ModelExecute(target_cur, int(item), target_values)
+            response = executer.process()
+
+            years = [int(item.year) for item in indicator_values]
+            years.append(2023)
+            interim = {
+                "cur_id": target_cur,
+                "indicator_id": int(item),
+                "values": response,
+                "years": years
+            }
+            sended_data.append(interim)
+        return jsonify({"data": sended_data}), 200
+    else:
+        return jsonify({"status": "error"}), 500
 
 @app.route("/")
 def index():
     return render_template("index.html")
 
-
 @app.route('/predict', methods=["GET", "POST"])
 def predict():
     if request.method == "POST":
-        # здесь мы получаем жсон просто с фронта ниче особенного
-        data = request.get_json()
-        indicators = data.get('indicators')
-
-        print(indicators)
-
-        # Валидация на пустое значение
-        if indicators:
-            sended_data = [] # массив для того, чтобы отправить его потом обратно и радоваться жизни
-
-            # тут как я говорил мы через цикл перебираем все выбранные показатели
-            for item in indicators:
-
-                target_cur = db.session.query(cur_indicator).filter_by(indicator_id=int(item)).first()[0] # Это отправляем в сервис || короче вот здесь мы получаем из бдшки айди цура
-
-                indicator_values = IndicatorValue.query.filter_by(indicator_id=int(item)).all()
-                target_values = [float(item.value) for item in indicator_values] # Это отправляем в сервис || дальше здесь мы получаем все значения (они оказывается сами фильтруются по годам) и заносим их в массив
-
-                executer = ModelExecute(target_cur, int(item), target_values) # здесь самое интересное. по сути мы вызываем класс (сервис) и передаем туда переменные для инициализации
-
-                response = executer.process() # здесь мы уже вызываем непосредственно логическую функцию, которая нам запускает модель и вкидывает туда массив который мы ей предоставили. дальше переходим в сервис
-
-                # после того как мы в переменную response получили данные, засовываем так же в теле цикла в словарь промежуточный
-                years = [int(item.year) for item in indicator_values]
-                years.append(2023)
-                interim = {
-                    "cur_id": target_cur,
-                    "indicator_id": int(item),
-                    "values": response,
-                    "years": years
-                }
-
-                print(interim)
-
-                sended_data.append(interim) # а дальше просто добавляем в массив, который в дальнейшем отправим на фронт обратно
-
-
-            return jsonify({"data":sended_data}), 200
-        else:
-            return jsonify({"status":"error"}), 500
+        return get_prediction_data()
 
     list_cur = [{
         "name": item.name,
-        "id":item.id
+        "id": item.id
     } for item in Cur.query.all()]
 
     list_indicators = [{
@@ -87,11 +86,13 @@ def predict():
 
     return render_template("predict.html", list_cur=list_cur, list_indicators=list_indicators, check_data=test)
 
+@app.after_request
+def add_cors_headers(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization'
+    response.headers['Access-Control-Allow-Methods'] = 'GET,PUT,POST,DELETE,OPTIONS'
+    return response
 
 if __name__ == "__main__":
-    if not os.path.exists(f"{os.getcwd()}/instance/{app.config['DATABASE_FILE']}"):
-        with app.app_context():
-            db.create_all()
-            fill_db()
-
+    init_db()
     app.run("0.0.0.0", port=8000, debug=True)

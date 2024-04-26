@@ -11,3 +11,19 @@
   font-family: "Sansation-Bold";
   font-size: 20px;
 }
+
+hr{
+  margin: 1rem 0;
+  color: inherit;
+  background-color: currentColor;
+  border: 0;
+  opacity: 0.25;
+}
+
+.run-button{
+  width: 20%;
+}
+
+.result{
+  max-width: 100% !important;
+}
