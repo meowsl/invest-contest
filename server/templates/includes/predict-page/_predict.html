@@ -61,11 +61,19 @@
           id="indicator-list"
           class="d-flex flex-column mt-3"
         ></div>
+        <hr
+          class="bg-dark border-2 border-top border-dark"
+          style="margin: 1rem 0;
+        color: inherit;
+        background-color: currentColor;
+        border: 0;
+        opacity: 0.25;"
+        />
       </div>
       <div class="col-12">
         <div
           id="result"
-          class="mt-3 h2"
+          class=" mt-3"
         ></div>
       </div>
     </div>
@@ -193,22 +201,104 @@
           throw new Error('Ошибка при отправке данных на сервер');
         }
       })
+    fetch('/predict', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ indicators: selectedIndicators })
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          console.error('Ошибка при отправке данных на сервер');
+          throw new Error('Ошибка при отправке данных на сервер');
+        }
+      })
       .then(data => {
         console.log('Данные успешно получены с сервера:', data);
-        // Отображаем полученные данные в отдельном элементе
-        const resultElement = document.getElementById('result');
-        resultElement.innerHTML = '';
-        data.data.forEach(item => {
+
+        const resultDiv = document.getElementById('result');
+
+        data.data.forEach((item, index) => {
+          // Присваиваем значения с бэке переменным
           const curId = item.cur_id;
           const indicatorId = item.indicator_id;
           const values = item.values;
+          const years = item.years;
 
-          const curName = test.find(cur => cur.cur_id === curId)?.name || `Currency ${curId}`;
+          // Выделяем последние данные
+          const lastYear = years[years.length - 1];
+          const lastValue = values[values.length - 1];
+
+
+          const curName = test.find(cur => cur.cur_id === curId)?.name || `ЦУР ${curId}`;
           const indicatorName = list_indicators_local.find(indicator => indicator.indicator_id === indicatorId)?.name || `Indicator ${indicatorId}`;
 
           const resultItem = document.createElement('div');
-          resultItem.textContent = `${curName} - ${indicatorName}: ${values.join(', ')}`;
-          resultElement.appendChild(resultItem);
+          // resultItem.textContent = `${curName} - ${indicatorName}: ${values.join(', ')}`;
+          resultDiv.appendChild(resultItem);
+
+          // Создаем линейную диаграмму
+          const lineData = [{
+            x: years,
+            y: values,
+            type: 'scatter',
+            mode: 'lines',
+            marker: {
+              color: 'blue'
+            }
+          }, {
+            x: [lastYear],
+            y: [lastValue],
+            type: 'scatter',
+            mode: 'markers',
+            marker: {
+              color: 'red',
+              size: 12,
+              symbol: 'circle'
+            }
+          }];
+
+          const layout = {
+            title: {
+              text: `${curName}<br>${indicatorName}`,
+              font: {
+                family: 'Sansation-Bold',
+                size: 20
+              },
+              xref: 'paper',
+              automargin: true,
+              autopadding: true,
+              wrap: 50
+            },
+            xaxis: {
+              title: 'Год'
+            },
+            yaxis: {
+              title: 'Показатель'
+            },
+            annotations: [{
+              x: lastYear,
+              y: lastValue,
+              text: 'predict',
+              showarrow: false,
+              font: {
+                color: 'red',
+                size: 14
+              },
+              xanchor: 'center',
+              yanchor: 'bottom'
+            }]
+          };
+
+          // Создаем новый контейнер для линейной диаграммы с уникальным идентификатором
+          const lineGraphDiv = document.createElement('div');
+          lineGraphDiv.id = `line-graph-${index}`;
+          resultDiv.appendChild(lineGraphDiv);
+
+          Plotly.newPlot(`line-graph-${index}`, lineData, layout);
         });
       })
       .catch(error => {

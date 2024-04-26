@@ -24,7 +24,8 @@ def fill_db():
 
         # Создаем новый индикатор
         new_indicator = Indicator(
-            name=item['Name']
+            name=item['Name'],
+            number=item['Indicator']
         )
         db.session.add(new_indicator)
         db.session.commit()

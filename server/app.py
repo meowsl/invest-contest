@@ -24,13 +24,12 @@ def index():
 
 @app.route('/predict', methods=["GET", "POST"])
 def predict():
-    '''
-    вот эта вся залупа отвечает за обработку пост запроса.
-    '''
     if request.method == "POST":
         # здесь мы получаем жсон просто с фронта ниче особенного
         data = request.get_json()
         indicators = data.get('indicators')
+
+        print(indicators)
 
         # Валидация на пустое значение
         if indicators:
@@ -49,14 +48,19 @@ def predict():
                 response = executer.process() # здесь мы уже вызываем непосредственно логическую функцию, которая нам запускает модель и вкидывает туда массив который мы ей предоставили. дальше переходим в сервис
 
                 # после того как мы в переменную response получили данные, засовываем так же в теле цикла в словарь промежуточный
+                years = [int(item.year) for item in indicator_values]
+                years.append(2023)
                 interim = {
                     "cur_id": target_cur,
                     "indicator_id": int(item),
-                    "values": response
+                    "values": response,
+                    "years": years
                 }
 
                 print(interim)
+
                 sended_data.append(interim) # а дальше просто добавляем в массив, который в дальнейшем отправим на фронт обратно
+
 
             return jsonify({"data":sended_data}), 200
         else:
@@ -69,7 +73,7 @@ def predict():
 
     list_indicators = [{
         "name": re.sub(r'\W+', ' ', item.name),
-        "indicator_id": item.id
+        "indicator_id": item.id,
     } for item in Indicator.query.all()]
 
     check_list = []

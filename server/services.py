@@ -1,6 +1,7 @@
 import openpyxl, os
 import tensorflow as tf
 import numpy as np
+from models import Indicator
 
 class ExcelParser:
     '''
@@ -144,8 +145,10 @@ class ModelExecute:
 
         result = self.values # здесь мы объявляем переменную со значениями, в которую потом добавим наш предикт
 
+        indicator = Indicator.query.filter_by(id=self.indicator_id).first()
+
         # Подгружаем модель
-        model_path = os.path.join(os.path.dirname(__file__), f'source/CUR_{self.cur_id}/indicator{self.indicator_id}_model')  # ну здесь понятно уже путь просто создаем
+        model_path = os.path.join(os.path.dirname(__file__), f'source/CUR_{self.cur_id}/indicator{indicator.number}_model')  # ну здесь понятно уже путь просто создаем
         model = tf.saved_model.load(model_path) # а тут уже передаем его
 
         data = np.array(self.values).reshape((-1, 1)) # дальше идет классическое преобразование данных как и при обучении
