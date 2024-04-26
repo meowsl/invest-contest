@@ -4,6 +4,7 @@ install:
 	@poetry env use 3.10.5
 	@poetry install --no-root
 	@poetry run python $(SERVER_DIR)/environments.py && echo .env successfully created
+	@.venv\Scripts\pip install -r .\requirements.txt
 
 .PHONY: run
 run:

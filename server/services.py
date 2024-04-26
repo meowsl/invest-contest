@@ -1,4 +1,6 @@
-import openpyxl
+import openpyxl, os
+import tensorflow as tf
+import numpy as np
 
 class ExcelParser:
     '''
@@ -131,3 +133,31 @@ class CURManager:
     }
 
 
+class ModelExecute:
+
+    def __init__(self, cur_id, indicator_id, values):
+        self.cur_id = cur_id
+        self.indicator_id = indicator_id
+        self.values = values
+
+    def process(self):
+
+        result = self.values # здесь мы объявляем переменную со значениями, в которую потом добавим наш предикт
+
+        # Подгружаем модель
+        model_path = os.path.join(os.path.dirname(__file__), f'source/CUR_{self.cur_id}/indicator{self.indicator_id}_model')  # ну здесь понятно уже путь просто создаем
+        model = tf.saved_model.load(model_path) # а тут уже передаем его
+
+        data = np.array(self.values).reshape((-1, 1)) # дальше идет классическое преобразование данных как и при обучении
+
+        data_tensor = tf.convert_to_tensor(data, dtype=tf.float32)
+        data_tensor = tf.expand_dims(data_tensor, axis=-1)
+
+        # Вызов метода predict модели
+        output = model.signatures["serving_default"](inputs=data_tensor)
+
+        # Получение результатов
+        pred = output["output_0"].numpy()
+        result.append(float(f'{pred[-1][0]:.1f}')) # вот с этим форматированием дрочь но все равно прикольно
+
+        return result # ну и соотв. возвращаем наш массив в который мы уже дополнительно добавили предикт

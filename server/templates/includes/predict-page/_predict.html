@@ -1,7 +1,7 @@
 <div class="predict container-fluid d-flex justify-content-center align-items-center">
   <div class="predict__panel container-fluid">
     <div class="row d-flex justify-content-around">
-      <div class="col-12 d-flex flex-column justify-content-center">
+      <div class="col-12 d-flex justify-content-center">
         <div class="dropdown d-flex justify-content-center">
           <button
             class="btn btn-secondary dropdown-toggle"
@@ -35,13 +35,21 @@
             {% endfor %}
           </ul>
         </div>
+      </div>
+      <div class="col-12 d-flex flex-column justify-content-center">
+        <button
+          type="button"
+          class="btn btn-primary mt-3 mx-auto"
+          id="run-button"
+          style="width: 20%;"
+        >Запуск</button>
         <hr
           class="bg-dark border-2 border-top border-dark"
           style="margin: 1rem 0;
-          color: inherit;
-          background-color: currentColor;
-          border: 0;
-          opacity: 0.25;"
+        color: inherit;
+        background-color: currentColor;
+        border: 0;
+        opacity: 0.25;"
         />
       </div>
       <div class="col d-flex flex-column justify-content-center">
@@ -52,6 +60,12 @@
         <div
           id="indicator-list"
           class="d-flex flex-column mt-3"
+        ></div>
+      </div>
+      <div class="col-12">
+        <div
+          id="result"
+          class="mt-3 h2"
         ></div>
       </div>
     </div>
@@ -157,5 +171,48 @@
     label.addEventListener('click', event => {
       event.stopPropagation();
     });
+  });
+
+  document.getElementById('run-button').addEventListener('click', () => {
+    // Собираем значения выделенных чекбоксов
+    const selectedIndicators = Array.from(document.querySelectorAll('.indicator-checkbox:checked'), checkbox => checkbox.value);
+
+    // Отправляем данные на сервер Flask с помощью fetch API
+    fetch('/predict', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ indicators: selectedIndicators })
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          console.error('Ошибка при отправке данных на сервер');
+          throw new Error('Ошибка при отправке данных на сервер');
+        }
+      })
+      .then(data => {
+        console.log('Данные успешно получены с сервера:', data);
+        // Отображаем полученные данные в отдельном элементе
+        const resultElement = document.getElementById('result');
+        resultElement.innerHTML = '';
+        data.data.forEach(item => {
+          const curId = item.cur_id;
+          const indicatorId = item.indicator_id;
+          const values = item.values;
+
+          const curName = test.find(cur => cur.cur_id === curId)?.name || `Currency ${curId}`;
+          const indicatorName = list_indicators_local.find(indicator => indicator.indicator_id === indicatorId)?.name || `Indicator ${indicatorId}`;
+
+          const resultItem = document.createElement('div');
+          resultItem.textContent = `${curName} - ${indicatorName}: ${values.join(', ')}`;
+          resultElement.appendChild(resultItem);
+        });
+      })
+      .catch(error => {
+        console.error('Ошибка при получении данных с сервера:', error);
+      });
   });
 </script>
