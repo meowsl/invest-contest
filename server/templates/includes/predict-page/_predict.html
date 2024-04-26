@@ -220,7 +220,7 @@
         console.log('Данные успешно получены с сервера:', data);
 
         const resultDiv = document.getElementById('result');
-
+        resultDiv.innerHTML = '';
         data.data.forEach((item, index) => {
           // Присваиваем значения с бэке переменным
           const curId = item.cur_id;
