@@ -8,4 +8,4 @@ install:
 
 .PHONY: run
 run:
-	@poetry run python ./${SERVER_DIR}/app.py --debug
+	@poetry run python -B ./${SERVER_DIR}/app.py --debug
