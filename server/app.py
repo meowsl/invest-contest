@@ -4,7 +4,8 @@ from flask import (
     Flask,
     render_template,
     request,
-    jsonify
+    jsonify,
+    send_from_directory
 )
 from flask_sqlalchemy import SQLAlchemy
 from models import *
@@ -85,6 +86,10 @@ def predict():
     test = [{"cur_id": cur_id, "indicator_id": indicator_ids} for cur_id, indicator_ids in result.items()]
 
     return render_template("predict.html", list_cur=list_cur, list_indicators=list_indicators, check_data=test)
+
+@app.route('/favicon.ico')
+def fav():
+    return send_from_directory(os.path.join('static'),'favicon.ico')
 
 @app.after_request
 def add_cors_headers(response):
